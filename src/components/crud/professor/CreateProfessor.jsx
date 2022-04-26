@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function CreateProfessor() {
 
@@ -8,10 +9,22 @@ function CreateProfessor() {
     const [degree, setDegree] = useState("")
 
     const handleSubmit = (event) => {
-        event.preventDefault()
-        console.log(name)
-        console.log(university)
-        console.log(degree)
+        event.preventDefault() //cancela o evento se for cancelável
+
+        const novoProfessor = {name, university, degree}
+
+        axios.post('http://localhost:3001/professores', novoProfessor)
+        .then(
+            (response) => {
+                console.log(response.data)
+                alert(`professor ${name} criado com sucesso.`)
+            }
+        )
+        .catch(
+            (error) => {
+                console.log(error)
+            }
+        )
     }
 
     return (

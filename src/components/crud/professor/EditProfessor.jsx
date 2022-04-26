@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { professors } from "./data";
+import axios from "axios";
 
 function EditProfessor() {
 
@@ -9,22 +9,32 @@ function EditProfessor() {
     const [degree, setDegree] = useState("")
     const params = useParams()
 
-    useEffect(
+    useEffect( //parte de pegar no json server e colocar no formulario
         () => {
-            const professor = professors[params.id]
-            setName(professor.name)
-            setUniversity(professor.university)
-            setDegree(professor.degree)
-        }
-        ,
+            axios.get('http://localhost:3001/professores/' + params.id)
+            .then(
+                (response) => {
+                    setName(response.data.name)
+                    setUniversity(response.data.university)
+                    setDegree(response.data.degree)
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error)
+                }
+            )
+        },
         [params.id]
     )
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(name)
-        console.log(university)
-        console.log(degree)
+
+        const updatedProfessor = {name, university, degree}
+        axios.put('http://localhost:3001/professores/' + params.id, updatedProfessor)
+            .then(response => console.log("professor atualizado"))
+            .catch(error => console.log(error))
     }
 
     return (

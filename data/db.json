@@ -1,0 +1,28 @@
+{
+  "professores": [
+    {
+      "id": 0,
+      "name": "Jefferson",
+      "university": "UFC",
+      "degree": "Graduação"
+    },
+    {
+      "id": 1,
+      "name": "Francisco Aragão",
+      "university": "USP",
+      "degree": "Doutorado"
+    },
+    {
+      "id": 2,
+      "name": "Atílio",
+      "university": "UNICAMP",
+      "degree": "Mestrado"
+    },
+    {
+      "name": "Livia Almada",
+      "university": "CC",
+      "degree": "Doutora",
+      "id": 3
+    }
+  ]
+}

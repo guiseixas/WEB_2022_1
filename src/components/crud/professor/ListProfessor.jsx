@@ -1,10 +1,25 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import ProfessorTableRow from "./ProfessorTableRow";
-import { professors } from "./data";
 
 function ListProfessor() {
+
+    const [professors, setProfessors] = useState([])
+
+    useEffect(        
+        ()=>{
+          axios.get("http://localhost:3001/professores")
+          .then(
+              (response)=>{
+                  setProfessors(response.data)
+              }
+          )
+          .catch(error=>console.log(error))
+        },
+        []
+    )
 
     function generateTable(){
         if(!professors) return
