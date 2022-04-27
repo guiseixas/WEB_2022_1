@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { students } from './data.js'
+import axios from "axios";
 
 function EditStudent(){
 
@@ -9,22 +9,32 @@ function EditStudent(){
     const [ira, setIRA] = useState(0)
     const params = useParams()
     
-      useEffect(
+    useEffect( //parte de pegar no json server e colocar no formulario
         () => {
-            const student = students[params.id]
-            setName(student.name)
-            setCourse(student.course)
-            setIRA(student.ira)
-        }
-        ,
+            axios.get('http://localhost:3001/estudantes/' + params.id)
+            .then(
+                (response) => {
+                    setName(response.data.name)
+                    setCourse(response.data.course)
+                    setIRA(response.data.ira)
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error)
+                }
+            )
+        },
         [params.id]
-        )
+    )
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(name)
-        console.log(course)
-        console.log(ira)
+
+        const updatedStudent = {name, course, ira}
+        axios.put('http://localhost:3001/estudantes/' + params.id, updatedStudent)
+            .then(response => console.log("estudante atualizado"))
+            .catch(error => console.log(error))
     }
 
     return (

@@ -17,12 +17,20 @@
       "name": "Atílio",
       "university": "UNICAMP",
       "degree": "Mestrado"
+    }
+  ],
+  "estudantes": [
+    {
+      "name": "Guilherme Seixas",
+      "course": "SI",
+      "ira": 9,
+      "id": 0
     },
     {
-      "name": "Livia Almada",
-      "university": "CC",
-      "degree": "Doutora",
-      "id": 3
+      "id": 1,
+      "name": "Luiz",
+      "course": "DD",
+      "ira": 9
     }
   ]
 }

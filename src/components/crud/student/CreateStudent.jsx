@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function CreateStudent(){
 
@@ -9,9 +10,21 @@ function CreateStudent(){
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(name)
-        console.log(course)
-        console.log(ira)
+
+        const novoEstudante = {name, course, ira}
+
+        axios.post('http://localhost:3001/estudantes', novoEstudante)
+        .then(
+            (response) => {
+                console.log(response.data)
+                alert(`estudante ${name} criado com sucesso.`)
+            }
+        )
+        .catch(
+            (error) => {
+                console.log(error)
+            }
+        )
     }
 
     return(
