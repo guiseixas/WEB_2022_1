@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function EditStudent(){
+function EditStudent() {
 
     const [name, setName] = useState("")
     const [course, setCourse] = useState("")
     const [ira, setIRA] = useState(0)
     const params = useParams()
-    
+    const navigate = useNavigate()
+
     useEffect( //parte de pegar no json server e colocar no formulario
         () => {
-            axios.get('http://localhost:3001/estudantes/' + params.id)
-            .then(
-                (response) => {
-                    setName(response.data.name)
-                    setCourse(response.data.course)
-                    setIRA(response.data.ira)
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
+            axios.get('http://localhost:3002/crud/student/retrieve/' + params.id)
+                .then(
+                    (response) => {
+                        console.log(params)
+                        console.log(response.data)
+                        setName(response.data.name)
+                        setCourse(response.data.course)
+                        setIRA(response.data.ira)
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log(error)
+                    }
+                )
         },
         [params.id]
     )
@@ -31,9 +34,13 @@ function EditStudent(){
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        const updatedStudent = {name, course, ira}
-        axios.put('http://localhost:3001/estudantes/' + params.id, updatedStudent)
-            .then(response => console.log("estudante atualizado"))
+        const updatedStudent = { name, course, ira }
+        axios.put('http://localhost:3002/crud/student/update/' + params.id, updatedStudent)
+            .then(response => {
+                console.log("estudante atualizado")
+                navigate("/listStudent")
+            }
+            )
             .catch(error => console.log(error))
     }
 

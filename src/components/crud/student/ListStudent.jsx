@@ -9,7 +9,7 @@ function ListStudent() {
 
     useEffect(        
         ()=>{
-          axios.get("http://localhost:3001/estudantes")
+          axios.get('http://localhost:3002/crud/student/list')
           .then(
               (response)=>{
                 setStudents(response.data)

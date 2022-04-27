@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function CreateStudent(){
@@ -7,17 +7,19 @@ function CreateStudent(){
     const [name, setName] = useState("")
     const [course, setCourse] = useState("")
     const [ira, setIRA] = useState(0)
+    const navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const novoEstudante = {name, course, ira}
 
-        axios.post('http://localhost:3001/estudantes', novoEstudante)
+        axios.post('http://localhost:3002/crud/student/create', novoEstudante)
         .then(
             (response) => {
                 console.log(response.data)
                 alert(`estudante ${name} criado com sucesso.`)
+                navigate("/listStudent")
             }
         )
         .catch(

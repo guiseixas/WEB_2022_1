@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 
 function EditProfessor() {
 
@@ -8,10 +9,11 @@ function EditProfessor() {
     const [university, setUniversity] = useState("")
     const [degree, setDegree] = useState("")
     const params = useParams()
+    const navigate = useNavigate()
 
     useEffect( //parte de pegar no json server e colocar no formulario
         () => {
-            axios.get('http://localhost:3001/professores/' + params.id)
+            axios.get('http://localhost:3002/crud/professor/retrieve/' + params.id)
             .then(
                 (response) => {
                     setName(response.data.name)
@@ -32,8 +34,11 @@ function EditProfessor() {
         event.preventDefault()
 
         const updatedProfessor = {name, university, degree}
-        axios.put('http://localhost:3001/professores/' + params.id, updatedProfessor)
-            .then(response => console.log("professor atualizado"))
+        axios.put('http://localhost:3002/crud/professor/update/' + params.id, updatedProfessor)
+            .then(response => {
+                console.log("professor atualizado")
+                navigate("/listProfessor")
+            })
             .catch(error => console.log(error))
     }
 
